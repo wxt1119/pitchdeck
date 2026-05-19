@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月团队徒步团建互动方案</title>
+  <style>
+    :root {
+      --ink: #17211c;
+      --muted: #627069;
+      --line: #d9e3dd;
+      --paper: #f7faf6;
+      --panel: #ffffff;
+      --green: #28734d;
+      --teal: #0f766e;
+      --blue: #315f96;
+      --amber: #a7651b;
+      --red: #a43e47;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    header {
+      padding: 28px clamp(18px, 5vw, 56px) 18px;
+      background: linear-gradient(180deg, #e9f5ed, #f7faf6);
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.5vw, 48px);
+      letter-spacing: 0;
+    }
+    h2 { margin: 0 0 10px; font-size: 20px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: 0; }
+    p { line-height: 1.6; }
+    main { padding: 18px clamp(18px, 5vw, 56px) 44px; }
+    .subhead {
+      max-width: 980px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 9px 12px;
+      min-height: 38px;
+      cursor: pointer;
+      font: inherit;
+    }
+    button.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .68;
+      background: #edf4ef;
+    }
+    .notice {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .panel, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .recommend {
+      border-left: 5px solid var(--green);
+      background: #f0f8f2;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cover {
+      min-height: 150px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #e4eee8;
+      position: relative;
+    }
+    .cover svg {
+      display: block;
+      width: 100%;
+      height: 150px;
+    }
+    .cover img {
+      display: block;
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+    }
+    .gallery-nav {
+      position: absolute;
+      top: 88px;
+      width: 32px;
+      height: 32px;
+      min-height: 32px;
+      border-radius: 999px;
+      border-color: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.85);
+      padding: 0;
+      display: grid;
+      place-items: center;
+    }
+    .gallery-nav.prev { left: 8px; }
+    .gallery-nav.next { right: 8px; }
+    .gallery-count {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border-radius: 999px;
+      background: rgba(23, 33, 28, .74);
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .caption {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 8px 10px;
+      background: #f7faf6;
+      border-top: 1px solid var(--line);
+    }
+    .card.selected {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(40, 115, 77, .12);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px;
+      color: #31423a;
+      background: #edf4ef;
+      border: 1px solid #dbe8df;
+      border-radius: 999px;
+      padding: 4px 8px;
+    }
+    .tag.water { background: #e7f5f3; color: var(--teal); }
+    .tag.challenge { background: #fff3df; color: var(--amber); }
+    .tag.source { background: #f7ecf0; color: #9d3655; }
+    .tag.difficulty { background: #eaf0fa; color: var(--blue); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .metric {
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+    .metric b { display: block; font-size: 17px; }
+    .metric span { color: var(--muted); font-size: 12px; }
+    details {
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+    summary { cursor: pointer; font-weight: 650; }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0 12px;
+    }
+    .section { display: none; }
+    .section.active { display: block; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    th { background: #edf4ef; }
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+    .event {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 12px;
+      border-left: 3px solid var(--blue);
+      padding: 10px 12px;
+      background: var(--panel);
+      border-radius: 0 8px 8px 0;
+    }
+    .score {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      max-width: 140px;
+    }
+    .dot {
+      height: 8px;
+      border-radius: 999px;
+      background: #d7ded9;
+    }
+    .dot.on { background: var(--green); }
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    a {
+      color: var(--blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .sources {
+      display: grid;
+      gap: 8px;
+    }
+    .source-row {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+    }
+    .pending {
+      color: var(--muted);
+    }
+    .poll {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .vote-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel);
+    }
+    .vote-card.voted {
+      border-color: var(--green);
+      background: #f0f8f2;
+    }
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e2e9e5;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--green);
+      width: 0;
+    }
+    .comment-box {
+      display: grid;
+      grid-template-columns: minmax(120px, .4fr) minmax(220px, 1fr) auto;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    input, select {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 10px;
+      min-height: 38px;
+      font: inherit;
+      background: var(--panel);
+    }
+    .comment {
+      border-top: 1px solid var(--line);
+      padding: 10px 0;
+    }
+    .empty {
+      color: var(--muted);
+      padding: 12px;
+      background: #f2f6f3;
+      border-radius: 8px;
+    }
+    .error {
+      border: 1px solid #efc6c8;
+      background: #fff5f5;
+      color: #7f1d1d;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+    }
+    ul { padding-left: 20px; }
+    @media (max-width: 760px) {
+      .notice { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr; }
+      .event { grid-template-columns: 1fr; }
+      .comment-box { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>6月团队徒步团建互动方案</h1>
+    <div class="subhead">需求：约40人，15公里以上，稍有强度但照顾团队平均水平，优先考虑有溯溪/水线体验。当前按北京出发做测试版；路线和价格均需 vendor 提供实测轨迹与当季确认。</div>
+  </header>
+
+  <main>
+    <div class="notice">
+      <section class="panel">
+        <h2>请仔细看小黑板</h2>
+        <ul>
+          <li><b>主推方向：</b>水泉沟-水长城延展线，兼顾峡谷、水线、长城记忆点。</li>
+          <li><b>强度控制：</b>主线15km左右，同时配置8-10km退出线。</li>
+          <li><b>组织方式：</b>建议周五QBR后出发住怀柔/延庆，周六徒步；也可压缩为周六一日。</li>
+          <li><b>硬性要求：</b>vendor 必须提供实测轨迹、雨后替代路线、向导配比、收队机制。</li>
+        </ul>
+      </section>
+      <section class="panel recommend">
+        <h2>当前推荐</h2>
+        <p id="recommendText"></p>
+        <button id="pickRecommended">选中推荐方案</button>
+      </section>
+    </div>
+
+    <div class="bar" id="filters"></div>
+    <section class="grid" id="cards"></section>
+
+    <nav class="tabs">
+      <button class="active" data-tab="compare">方案比较</button>
+      <button data-tab="timeline">建议日程</button>
+      <button data-tab="vendor">Vendor 问题</button>
+      <button data-tab="risk">风险与备选</button>
+      <button data-tab="sources">来源与图片</button>
+      <button data-tab="community">投票评论</button>
+    </nav>
+
+    <section class="section active" id="compare"></section>
+    <section class="section" id="timeline"></section>
+    <section class="section" id="vendor"></section>
+    <section class="section" id="risk"></section>
+    <section class="section" id="sources"></section>
+    <section class="section" id="community"></section>
+  </main>
+
+  <script>
+    const data = {
+      recommended: "水泉沟-水长城延展线最贴合“15km+、有水线、难度不过高”的需求，但必须用退出线和雨后替代方案控制风险。",
+      filters: ["全部", "有水线", "更稳妥", "两天一晚", "挑战感"],
+      routes: [
+        {
+          id: "shuiquan",
+          name: "水泉沟-水长城延展线",
+          fit: "最贴合需求",
+          tags: ["有水线", "挑战感", "两天一晚"],
+          distance: "15km左右",
+          climb: "中等",
+          duration: "5-6h",
+          score: { participation: 4, memory: 5, safety: 3, logistics: 4, water: 5 },
+          difficulty: "中等",
+          level: "B",
+          visual: "water",
+          images: [
+            { src: "https://sns-na-i11.xhscdn.com/1040g00832012a9943q00492fjbo43lbsfci7pi0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=483e6412e02c9f6c68deb21359420822&t=6a0c256a&origin=0", credit: "小红书真实笔记封面：Hi FuFu《享受户外，享受山野⛰️》" },
+            { src: "https://sns-na-i11.xhscdn.com/notes_pre_post/1040g3k03200669bn2g0g5ob68h27vd1ee9mh8v8?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=3ddcf809833b276fdf1e9cc43a24d236&t=6a0c256a&origin=0", credit: "小红书真实笔记封面：京遇（Leo）《每周一山｜徒步小众绝美峡谷溯溪，绝了！》" },
+            { src: "https://sns-na-i11.xhscdn.com/notes_pre_post/1040g3k831us78r84j4c0454s6lmdibdv17ilomo?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=85ed777c3857adebef20f1446fce4bcb&t=6a0c256a&origin=0", credit: "小红书真实笔记封面：同野《嫌北京徒步没有水？来这里！有山有水还刺激》" },
+            { src: "https://sns-na-i11.xhscdn.com/1040g00832012a9943q00492fjbo43lbsfci7pi0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=483e6412e02c9f6c68deb21359420822&t=6a0c256a&origin=0", credit: "备用真实来源图：北京旅游网峡谷溯溪活动页面" }
+          ],
+          primaryLink: "https://www.xiaohongshu.com/explore/69dbb13c000000021b00ae6c",
+          xhsStatus: "已接入 Just One API：龙泉峪/水泉沟徒步溯溪相关笔记",
+          xhsEvidence: "小红书近期结果显示：龙泉峪-水泉沟方向有真实徒步/溯溪内容；另有笔记标题明确提到“小众绝美峡谷溯溪”和“有山有水还刺激”。",
+          pros: ["最符合“有水线/溯溪感”", "北京周边记忆点强", "适合做夏季清凉主题"],
+          cons: ["常规公开线偏短，15km需延展", "雨后湿滑和水量变化风险最高", "40人队伍需要更强向导配置"],
+          verdict: "优先推进，但必须让 vendor 提供15km实测轨迹、退出点和雨后替代方案。",
+          sources: [
+            ["小红书笔记", "Hi FuFu：享受户外，享受山野⛰️（05-11，8赞，1评）", "https://www.xiaohongshu.com/explore/6a016ace000000000803d336"],
+            ["小红书笔记", "京遇（Leo）：每周一山｜徒步小众绝美峡谷溯溪，绝了！（05-11，8赞，4藏）", "https://www.xiaohongshu.com/explore/6a008833000000003700ecf7"],
+            ["小红书笔记", "同野：嫌北京徒步没有水？来这里！有山有水还刺激（04-29，91赞，122藏，45评）", "https://www.xiaohongshu.com/explore/69dbb13c000000021b00ae6c"],
+            ["路线事实", "Beijing Hikers: Shuiquan Canyon", "https://www.beijinghikers.com/hike-in-beijing/view/1198/shuiquan-canyon/"],
+            ["备用检索", "北京旅游网：峡谷溯溪/长城方向", "https://www.visitbeijing.com.cn/article/4CIgwUzyTKL"]
+          ],
+          why: "溪谷、巨石、长城和水线体验明确，6月氛围好，适合做团队打卡和轻挑战。",
+          watch: "公开常规版本偏短，要拉到15km必须由 vendor 做延展；雨后湿滑和水量变化是关键风险。",
+          ask: "提供15km实测轨迹、8-10km退出点、雨后替代线、向导和收队配比。"
+        },
+        {
+          id: "chongli",
+          name: "崇礼高山草甸定制线",
+          fit: "整体更稳",
+          tags: ["更稳妥", "两天一晚", "挑战感"],
+          distance: "15km左右",
+          climb: "中等+",
+          duration: "5-6.5h",
+          score: { participation: 4, memory: 4, safety: 4, logistics: 3, water: 1 },
+          difficulty: "中等偏上",
+          level: "B+",
+          visual: "meadow",
+          images: [
+            { src: "https://sns-na-i11.xhscdn.com/spectrum/1040g34o3206anifn5g0g5n57e5q4ih204si1jp0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=197e75f0e5436ea87fd2c253b1f88ba6&t=6a0c258d&origin=0", credit: "小红书真实笔记封面：北京徒步者CLUB《初级|玉石梁15公里路书 银莲花正当时》" },
+            { src: "https://sns-na-i11.xhscdn.com/1040g2sg31vqup0p52ae042104ij8kb9eoij18og?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=87becb48a1c85d7e597531b253401b76&t=6a0c258d&origin=0", credit: "小红书真实笔记封面：lwlwlwlwlwlwlwlwei《5.4崇礼三梁徒步～》" },
+            { src: "https://sns-na-i11.xhscdn.com/1040g00831vn4l8b4ii6g5nvjrdmg8tmd53a0f78?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=92859e063da56a7f060bc32efe891093&t=6a0c258d&origin=0", credit: "小红书真实笔记封面：魔人《我说玉石梁你不一定知道，我要说太舞呢》" },
+            { src: "https://sns-na-i11.xhscdn.com/spectrum/1040g34o3206anifn5g0g5n57e5q4ih204si1jp0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=197e75f0e5436ea87fd2c253b1f88ba6&t=6a0c258d&origin=0", credit: "团队历史真实图片：2024 Q2 崇礼玉石梁徒步篇" }
+          ],
+          primaryLink: "https://www.xiaohongshu.com/explore/6a06cf1f0000000007020d44",
+          xhsStatus: "已接入 Just One API：玉石梁/崇礼徒步相关笔记",
+          xhsEvidence: "小红书近期结果里直接出现“玉石梁15公里路书”，和本次15km+需求高度贴合；但是否适合40人团建仍需 vendor 确认轨迹与接驳。",
+          pros: ["15km路书与需求高度匹配", "草甸风景开阔，照片表现好", "路面和组织风险比峡谷水线更可控"],
+          cons: ["没有溯溪体验", "车程长，更适合两天一晚", "高山天气和防晒保暖要认真准备"],
+          verdict: "如果想保证完成率和团队体验稳定，这是最稳的15km+备选。",
+          sources: [
+            ["小红书笔记", "北京徒步者CLUB：初级|玉石梁15公里路书 银莲花正当时（4天前，12赞，4藏，6评）", "https://www.xiaohongshu.com/explore/6a06cf1f0000000007020d44"],
+            ["小红书笔记", "lwlwlwlwlwlwlwlwei：5.4崇礼三梁徒步～（05-06，16赞，3藏，4评）", "https://www.xiaohongshu.com/explore/69fb365c0000000023006c07"],
+            ["小红书笔记", "魔人：我说玉石梁你不一定知道，我要说太舞呢（05-03，5赞，1藏，8评）", "https://www.xiaohongshu.com/explore/69f73f56000000001e00e3c3"],
+            ["团队历史", "你们 2024 Q2 崇礼 QBR 活动方案", "https://bytedance.larkoffice.com/wiki/YrLswh9FXiguomkGJDOcArwIneb"]
+          ],
+          why: "路面可控、视野开阔，适合延续QBR+住宿+烤全羊+夜间活动的成熟节奏。",
+          watch: "车程更长，没有溯溪卖点；高山天气变化需要备衣和撤退规则。",
+          ask: "确认草甸路线15km轨迹、爬升、车辆接驳点、天气备选活动。"
+        },
+        {
+          id: "baihujian",
+          name: "白虎涧加长环线",
+          fit: "组织确定性高",
+          tags: ["更稳妥"],
+          distance: "15km定制",
+          climb: "中等",
+          duration: "5h左右",
+          score: { participation: 4, memory: 3, safety: 4, logistics: 5, water: 2 },
+          difficulty: "中等",
+          level: "B-",
+          visual: "ridge",
+          images: [
+            { src: "https://sns-na-i11.xhscdn.com/notes_pre_post/1040g3k8320ad2uh8me00496veduhar8krn48vv0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=fed998084d17d186e3ff2ed27483e9ba&t=6a0c2595&origin=0", credit: "小红书真实笔记封面：山顶有棵树《会翻山的小孩，是顶顶好养的》" },
+            { src: "https://sns-na-i11.xhscdn.com/1040g00831vls487fk8005p8o4fbp5mtm6ddtvq8?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=adc8fae19ef6cdd465752766902bffd7&t=6a0c2595&origin=0", credit: "小红书真实笔记封面：沐沐《每周一山 今天是穿越凤凰岭和白虎涧》" },
+            { src: "https://sns-na-i11.xhscdn.com/1040g0083208lb64em2005oi4bpjoc02886n8iho?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=b290368d5697d81373a1f1911fba326c&t=6a0c2595&origin=0", credit: "小红书真实笔记封面：非线性Daily《徒步｜白虎涧的自由时光⛰️》" },
+            { src: "https://sns-na-i11.xhscdn.com/notes_pre_post/1040g3k8320ad2uh8me00496veduhar8krn48vv0?imageView2/2/w/608/format/heif/q/56|imageMogr2/strip&redImage/frame/0/enhance/4&ap=5&sc=SRH_PRV&sign=fed998084d17d186e3ff2ed27483e9ba&t=6a0c2595&origin=0", credit: "备用真实来源图：北京旅游网白虎涧自然风景区图库" }
+          ],
+          primaryLink: "https://www.xiaohongshu.com/explore/69ecb5a40000000035028a68",
+          xhsStatus: "已接入 Just One API：白虎涧/北京徒步相关笔记",
+          xhsEvidence: "小红书近期结果显示白虎涧仍有活跃徒步内容，并出现凤凰岭-白虎涧穿越讨论；适合做近郊备选，但加长线必须核验开放边界。",
+          pros: ["近郊组织确定性最高", "你们团队历史上已有白虎涧经验", "餐饮、民宿、夜间活动容易串起来"],
+          cons: ["新鲜感弱", "水线不是核心卖点", "15km加长线需要核验开放边界"],
+          verdict: "适合做保守备选，不适合作为“溯溪优先”的主推。",
+          sources: [
+            ["小红书笔记", "山顶有棵树：会翻山的小孩，是顶顶好养的（昨天 19:39，2评）", "https://www.xiaohongshu.com/explore/6a0afa63000000003700db6e"],
+            ["小红书笔记", "沐沐：每周一山 今天是穿越凤凰岭和白虎涧（05-02，57赞，29藏，30评）", "https://www.xiaohongshu.com/explore/69ecb5a40000000035028a68"],
+            ["小红书笔记", "非线性Daily：徒步｜白虎涧的自由时光⛰️（2天前，5赞，3藏，9评）", "https://www.xiaohongshu.com/explore/6a09378b0000000008001c6a"],
+            ["公开图库", "北京旅游网：白虎涧自然风景区", "https://s.visitbeijing.com.cn/gallery/10494"],
+            ["团队历史", "你们 2025 Q1 白虎涧领导力活动", "https://bytedance.larkoffice.com/wiki/Li0jwM5QnikRVgkiNo5cDTwSnXf"]
+          ],
+          why: "近郊、民宿、餐饮和夜间活动组织成熟，适合40人团队控节奏。",
+          watch: "新鲜感弱，水线不是核心卖点；加长线需确认是否顺畅和合规。",
+          ask: "确认加长环线是否成熟、是否穿越未开放区域、补给和退出点。"
+        }
+      ],
+      timeline: [
+        ["Day1 15:30", "QBR结束后集合，确认名单、车牌、住宿分房"],
+        ["Day1 16:00", "大巴出发至怀柔/延庆方向"],
+        ["Day1 18:30", "晚餐：农家菜/烤虹鳟/烧烤"],
+        ["Day1 20:30", "夜间社交：血染钟楼、桌游、麻将、KTV按场地配置"],
+        ["Day2 08:00", "早餐，发放能量包和队伍分组"],
+        ["Day2 09:00", "安全说明，开始主线徒步"],
+        ["Day2 12:30", "溪谷/长城段补给，低强度组从退出点返程"],
+        ["Day2 15:30", "主线完成，集合拍照和补水"],
+        ["Day2 16:30", "大巴返程或晚餐后返程"]
+      ],
+      vendorQuestions: [
+        "15km主线的轨迹、爬升、路面类型、预计耗时分别是多少？",
+        "哪些路段是真正涉水/溯溪？6月水量是否稳定？雨后是否封闭或不建议通行？",
+        "40人团队配置几名向导？是否有 lead guide、sweep guide 和急救负责人？",
+        "8-10km退出点在哪里？车辆能否接驳？等待的同学在哪里休息？",
+        "是否包含保险、急救包、对讲机、能量补给、饮用水？",
+        "如果下雨或水量异常，替代路线和替代活动是什么？"
+      ],
+      risks: [
+        "平均水平团队不能只设计15km主线，必须有退出线。",
+        "溯溪/溪谷段雨后湿滑，活动前48小时需要复核天气和水量。",
+        "40人队伍容易拉长，建议每10-12人一个小组，首尾向导明确。",
+        "需要提前收集身体状况、是否恐高/膝盖旧伤/是否愿意涉水。",
+        "非徒步同学可安排水长城轻游、民宿休息、桌游或咖啡/农家体验。"
+      ]
+    };
+
+    const storageKey = "june-hiking-proposal-votes-comments-v2";
+    function readSavedState() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || "{\"votes\":{},\"myVotes\":[],\"comments\":[]}");
+      } catch (error) {
+        return { votes: {}, myVotes: [], comments: [] };
+      }
+    }
+    const saved = readSavedState();
+    const state = { filter: "全部", selected: "shuiquan", votes: saved.votes || {}, myVotes: saved.myVotes || [], comments: saved.comments || [], gallery: {} };
+    const el = (id) => document.getElementById(id);
+    const score = (n) => `<div class="score">${[1,2,3,4,5].map(i => `<span class="dot ${i <= n ? "on" : ""}"></span>`).join("")}</div>`;
+    const save = () => {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify({ votes: state.votes, myVotes: state.myVotes, comments: state.comments }));
+      } catch (error) {
+        console.warn("Local vote/comment storage is unavailable in this browser context.");
+      }
+    };
+    const sourceLink = ([kind, label, href]) => `<div class="source-row"><b>${kind}</b>${href ? `<a href="${href}" target="_blank" rel="noreferrer">${label}</a>` : `<span class="pending">${label}</span>`}</div>`;
+    const hasVoted = (id) => state.myVotes.includes(id);
+    function voteFor(id) {
+      if (hasVoted(id)) {
+        state.votes[id] = Math.max(0, (state.votes[id] || 0) - 1);
+        state.myVotes = state.myVotes.filter((voteId) => voteId !== id);
+      } else {
+        state.votes[id] = (state.votes[id] || 0) + 1;
+        state.myVotes.push(id);
+      }
+      save();
+      render();
+    }
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" }[char]));
+    const visual = (type, title) => {
+      const palette = {
+        water: ["#d8f0ee", "#73b8ad", "#2f7d57", "溪谷水线"],
+        meadow: ["#eaf4dc", "#a8c96b", "#315f96", "高山草甸"],
+        ridge: ["#eef1e7", "#b7a77a", "#28734d", "近郊山线"]
+      }[type] || ["#edf4ef", "#9fb8a8", "#28734d", "路线图"];
+      return `<svg viewBox="0 0 640 300" role="img" aria-label="${title}视觉示意图">
+        <rect width="640" height="300" fill="${palette[0]}"></rect>
+        <path d="M0 230 C90 180 130 205 200 150 C270 95 350 125 420 78 C510 18 575 72 640 42 L640 300 L0 300 Z" fill="${palette[1]}" opacity=".72"></path>
+        <path d="M0 252 C110 210 185 238 270 185 C365 126 447 170 540 104 C585 72 615 70 640 76 L640 300 L0 300 Z" fill="${palette[2]}" opacity=".38"></path>
+        ${type === "water" ? "<path d='M40 238 C125 215 160 242 238 208 C315 175 360 196 430 160 C505 122 555 135 610 104' fill='none' stroke='#e9ffff' stroke-width='16' opacity='.9'></path><path d='M40 238 C125 215 160 242 238 208 C315 175 360 196 430 160 C505 122 555 135 610 104' fill='none' stroke='#2992a0' stroke-width='5'></path>" : ""}
+        <path d="M70 210 C160 178 222 198 310 154 C405 106 492 120 582 78" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="12 12"></path>
+        <circle cx="70" cy="210" r="11" fill="#fff"></circle>
+        <circle cx="582" cy="78" r="11" fill="#fff"></circle>
+        <text x="28" y="42" fill="#17211c" font-size="24" font-weight="700">${title}</text>
+        <text x="28" y="74" fill="#627069" font-size="16">${palette[3]} · 图片位待替换为小红书/实拍素材</text>
+      </svg>`;
+    };
+
+    function visibleRoutes() {
+      return data.routes.filter(route => state.filter === "全部" || route.tags.includes(state.filter));
+    }
+
+    function renderFilters() {
+      el("filters").innerHTML = data.filters.map(filter => `<button class="${filter === state.filter ? "active" : ""}" data-filter="${filter}">${filter}</button>`).join("");
+      document.querySelectorAll("[data-filter]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.filter = button.dataset.filter;
+          render();
+        });
+      });
+    }
+
+    function renderCards() {
+      el("cards").innerHTML = visibleRoutes().map(route => `
+        <article class="card ${route.id === state.selected ? "selected" : ""}">
+          ${renderGallery(route)}
+          <h2>${route.name}</h2>
+          <div class="tags">
+            <span class="tag">${route.fit}</span>
+            <span class="tag difficulty">难度 ${route.level} · ${route.difficulty}</span>
+            <span class="tag source">小红书真实数据</span>
+            ${route.tags.map(tag => `<span class="tag ${tag === "有水线" ? "water" : tag === "挑战感" ? "challenge" : ""}">${tag}</span>`).join("")}
+          </div>
+          <p>${route.why}</p>
+          <div class="metrics">
+            <div class="metric"><b>${route.distance}</b><span>距离</span></div>
+            <div class="metric"><b>${route.climb}</b><span>爬升</span></div>
+            <div class="metric"><b>${route.duration}</b><span>时长</span></div>
+          </div>
+          <details open><summary>需要注意</summary><p>${route.watch}</p></details>
+          <details><summary>小红书证据</summary><p>${route.xhsEvidence}</p></details>
+          <details><summary>问 vendor</summary><p>${route.ask}</p></details>
+          <details><summary>来源链接</summary><div class="sources">${route.sources.map(sourceLink).join("")}</div></details>
+          <a href="${route.primaryLink}" target="_blank" rel="noreferrer">打开路线推荐来源</a>
+          <button data-vote="${route.id}">${hasVoted(route.id) ? "取消投票" : "投票支持"} · ${state.votes[route.id] || 0}</button>
+          <button data-pick="${route.id}">${route.id === state.selected ? "已选中" : "选这个方案"}</button>
+        </article>
+      `).join("");
+      document.querySelectorAll("[data-pick]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.selected = button.dataset.pick;
+          render();
+        });
+      });
+      document.querySelectorAll("[data-vote]").forEach(button => {
+        button.addEventListener("click", () => {
+          voteFor(button.dataset.vote);
+          document.querySelector("[data-tab='community']").click();
+        });
+      });
+      document.querySelectorAll("[data-gallery]").forEach(button => {
+        button.addEventListener("click", () => {
+          const route = data.routes.find(item => item.id === button.dataset.gallery);
+          const current = state.gallery[route.id] || 0;
+          const delta = Number(button.dataset.delta);
+          state.gallery[route.id] = (current + delta + route.images.length) % route.images.length;
+          render();
+        });
+      });
+    }
+
+    function renderGallery(route) {
+      const index = state.gallery[route.id] || 0;
+      const image = route.images[index];
+      return `<div class="cover">
+        <img src="${image.src}" alt="${route.name}真实来源图片 ${index + 1}">
+        <span class="gallery-count">${index + 1}/${route.images.length}</span>
+        <button class="gallery-nav prev" data-gallery="${route.id}" data-delta="-1" aria-label="上一张">‹</button>
+        <button class="gallery-nav next" data-gallery="${route.id}" data-delta="1" aria-label="下一张">›</button>
+        <div class="caption">${image.credit}</div>
+      </div>`;
+    }
+
+    function renderCompare() {
+      el("compare").innerHTML = `
+        <table>
+          <thead><tr><th>方案</th><th>最适合</th><th>优势</th><th>短板</th><th>判断</th></tr></thead>
+          <tbody>
+            ${data.routes.map(route => `
+              <tr>
+                <td><b>${route.name}</b><div class="note">难度 ${route.level} · ${route.difficulty}</div></td>
+                <td>${route.fit}<div class="note">水线 ${score(route.score.water)} 组织 ${score(route.score.logistics)}</div></td>
+                <td><ul>${route.pros.map(item => `<li>${item}</li>`).join("")}</ul></td>
+                <td><ul>${route.cons.map(item => `<li>${item}</li>`).join("")}</ul></td>
+                <td><b>${route.verdict}</b></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        <p class="note">评分是方案判断，不是路线事实；正式执行前需要 vendor 提供当季实测信息。</p>`;
+    }
+
+    function renderTimeline() {
+      el("timeline").innerHTML = `<div class="timeline">${data.timeline.map(([time, text]) => `<div class="event"><b>${time}</b><span>${text}</span></div>`).join("")}</div>`;
+    }
+
+    function renderLists() {
+      el("vendor").innerHTML = `<div class="panel"><h2>发给 vendor 的问题清单</h2><ul>${data.vendorQuestions.map(item => `<li>${item}</li>`).join("")}</ul></div>`;
+      el("risk").innerHTML = `<div class="split"><div class="panel"><h2>风险控制</h2><ul>${data.risks.map(item => `<li>${item}</li>`).join("")}</ul></div><div class="panel"><h2>结论</h2><p>如果你们想要“有水、15km、有强度但别太难”，水泉沟-水长城延展线最值得推进；如果更看重稳和完成率，崇礼高山草甸会更保险。</p></div></div>`;
+      el("sources").innerHTML = `<div class="panel"><h2>来源优先级</h2><p>第一优先级：Just One API 返回的小红书真实笔记，用来判断图片质感、季节水量、拥挤程度、体感难度和踩坑反馈。第二优先级：团队历史飞书方案，用来匹配你们的 QBR 节奏和组织偏好。第三优先级：公开路线/户外机构/官方文旅页面，用来校验距离、爬升、路况和风险。</p><table><thead><tr><th>方案</th><th>小红书状态</th><th>当前可点击来源</th></tr></thead><tbody>${data.routes.map(route => `<tr><td><b>${route.name}</b></td><td>${route.xhsStatus}</td><td>${route.sources.filter(([, , href]) => href).map(([, label, href]) => `<a href="${href}" target="_blank" rel="noreferrer">${label}</a>`).join("<br>")}</td></tr>`).join("")}</tbody></table><p class="note">图片说明：当前卡片图片已替换为 Just One API 返回的小红书笔记封面图，并保留笔记来源链接。路线可执行性仍需 vendor 用实测轨迹确认。</p></div>`;
+      renderCommunity();
+    }
+
+    function renderCommunity() {
+      const total = Object.values(state.votes).reduce((sum, n) => sum + n, 0);
+      el("community").innerHTML = `
+        <div class="panel">
+          <h2>投票结果</h2>
+          <div class="poll">${data.routes.map(route => {
+            const count = state.votes[route.id] || 0;
+            const pct = total ? Math.round(count / total * 100) : 0;
+            return `<div class="vote-card ${hasVoted(route.id) ? "voted" : ""}"><h3>${route.name}</h3><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><b>${count}票 · ${pct}%</b><p class="note">${route.fit}</p><button data-vote="${route.id}">${hasVoted(route.id) ? "取消投票" : "投一票"}</button></div>`;
+          }).join("")}</div>
+          <div class="comment-box">
+            <select id="commentRoute">${data.routes.map(route => `<option value="${route.id}">${route.name}</option>`).join("")}</select>
+            <input id="commentText" placeholder="写下你的顾虑、偏好或补充信息">
+            <button id="addComment">发布评论</button>
+          </div>
+          <div id="comments">${state.comments.length ? state.comments.map(comment => {
+            const route = data.routes.find(item => item.id === comment.route);
+            return `<div class="comment"><b>${route ? route.name : "方案"}</b><p>${escapeHtml(comment.text)}</p><span class="note">${comment.time}</span></div>`;
+          }).join("") : `<div class="empty">还没有评论。可以先投票，也可以写“担心太难”“更想有水”“不想两天一晚”之类的真实反馈。</div>`}</div>
+        </div>`;
+      document.querySelectorAll("#community [data-vote]").forEach(button => {
+        button.addEventListener("click", () => {
+          voteFor(button.dataset.vote);
+        });
+      });
+      document.getElementById("addComment").addEventListener("click", () => {
+        const text = document.getElementById("commentText").value.trim();
+        const route = document.getElementById("commentRoute").value;
+        if (!text) return;
+        state.comments.unshift({ route, text, time: new Date().toLocaleString("zh-CN", { hour12: false }) });
+        save();
+        render();
+        document.querySelector("[data-tab='community']").click();
+      });
+    }
+
+    function wireTabs() {
+      document.querySelectorAll("[data-tab]").forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-tab]").forEach(tab => tab.classList.toggle("active", tab === button));
+          document.querySelectorAll(".section").forEach(section => section.classList.toggle("active", section.id === button.dataset.tab));
+        });
+      });
+    }
+
+    function render() {
+      el("recommendText").textContent = data.recommended;
+      renderFilters();
+      renderCards();
+      renderCompare();
+      renderTimeline();
+      renderLists();
+    }
+
+    function showError(error) {
+      const main = document.querySelector("main");
+      main.insertAdjacentHTML("afterbegin", `<div class="error"><b>页面渲染遇到问题：</b>${escapeHtml(error.message || error)}。请刷新页面；如果仍然出现，把这个提示发给方案维护者。</div>`);
+    }
+
+    try {
+      document.getElementById("pickRecommended").addEventListener("click", () => {
+        state.selected = "shuiquan";
+        state.filter = "全部";
+        render();
+      });
+      render();
+      wireTabs();
+    } catch (error) {
+      showError(error);
+    }
+  </script>
+</body>
+</html>
